@@ -1,7 +1,8 @@
 # practice-product-store
 
-tech stack
-
-frontend: React.js
-backend: node.js, express.js
-database: mongoDB
+<h1>tech stack</h1>
+<ul>
+    <li>frontend: React.js</li>
+    <li>backend: node.js, express.js</li>
+    <li>database: mongoDB</li>
+</ul>
