@@ -27,24 +27,28 @@ export const useProductStore = create((set) => ({
     });
 
     return { success: true, message: "Product created successfully" };
+    // use axios
+    /*
+      const api = axios.create({
+          baseURL: "http://localhost:3000/api",
+          headers: { 
+              "Content-Type": "application/json" 
+          },
+      });
+  
+      try {
+        const { data } = await api.post("/products", newProduct);
+        set((state) => ({ products: [...state.products, data.data] }));
+        return { success: true, message: "Product created successfully" };
+      } catch (err) {
+        return { success: false, message: err.response?.data?.message || "Error" };
+      }
+  
+  */
   },
-
-  // use axios
-  /*
-    const api = axios.create({
-        baseURL: "http://localhost:3000/api",
-        headers: { 
-            "Content-Type": "application/json" 
-        },
-    });
-
-    try {
-      const { data } = await api.post("/products", newProduct);
-      set((state) => ({ products: [...state.products, data.data] }));
-      return { success: true, message: "Product created successfully" };
-    } catch (err) {
-      return { success: false, message: err.response?.data?.message || "Error" };
-    }
-
-*/
+  fetchProducts: async () => {
+    const res = await fetch("/api/products");
+    const data = await res.json();
+    set({ products: data.data });
+  },
 }));
