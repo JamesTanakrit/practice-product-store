@@ -4,11 +4,12 @@ import {
   Container,
   Heading,
   Input,
-  Text,
   useColorModeValue,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useProductStore } from "../stores/product";
 
 function CreatePage() {
   const [newProduct, setNewProduct] = useState({
@@ -21,8 +22,18 @@ function CreatePage() {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
-  const handleAddProduct = () => {
-    console.log(newProduct);
+  const { createProduct } = useProductStore();
+  const toast = useToast();
+
+  const handleAddProduct = async () => {
+    const { success, message } = await createProduct(newProduct);
+    toast({
+      title: success ? "Success" : "Error",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 8000,
+      isClosable: true,
+    });
   };
 
   return (
