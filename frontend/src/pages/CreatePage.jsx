@@ -34,6 +34,11 @@ function CreatePage() {
       duration: 8000,
       isClosable: true,
     });
+    setNewProduct({
+      name: "",
+      price: "",
+      image: "",
+    });
   };
 
   return (

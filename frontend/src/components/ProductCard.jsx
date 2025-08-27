@@ -6,13 +6,28 @@ import {
   Image,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { useProductStore } from "../stores/product";
 
 function ProductCard(props) {
   const textColor = useColorModeValue("gray.8000", "white");
   const bg = useColorModeValue("white", "gray.800");
+  const toast = useToast();
+
+  const { deleteProducts } = useProductStore();
+  const handleDeleteProduct = async (productId) => {
+    const { success, message } = await deleteProducts(productId);
+    toast({
+      title: success ? "Success" : "Error",
+      description: message,
+      status: success ? "success" : "error",
+      duration: 8000,
+      isClosable: true,
+    });
+  };
 
   return (
     <Box
@@ -40,7 +55,11 @@ function ProductCard(props) {
 
         <HStack spacing={2}>
           <IconButton icon={<FaRegEdit />} colorScheme="blue" />
-          <IconButton icon={<RiDeleteBin5Line />} colorScheme="red" />
+          <IconButton
+            icon={<RiDeleteBin5Line />}
+            colorScheme="red"
+            onClick={() => handleDeleteProduct(props.product._id)}
+          />
         </HStack>
       </Box>
     </Box>
